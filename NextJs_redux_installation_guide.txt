@@ -1,8 +1,8 @@
-1.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>First Install NextJS project in TYPESCRIPT or JAVASCRIPT<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+1.|||||||||||||||||||||||||||||||||||||||||| First Install NextJS project in TYPESCRIPT or JAVASCRIPT||||||||||||||||||||||||||||||||||||||||||||||||||
 
 npx create-next-app@latest
 
-2.>>>>>>>>>>>>>>>>>>>>>after that add these settings to your project<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+2.|||||||||||||||||||||||||||||||||||||||||||||||after that add these settings to your project|||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 C:\Users\user\Desktop\Delete>npx create-next-app@latest
 √ What is your project named? ... type_project_name_here
@@ -15,23 +15,21 @@ C:\Users\user\Desktop\Delete>npx create-next-app@latest
 
 
 
-3.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Add Redux Toolkit for your nextjs Project<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+3.||||||||||||||||||||||||||||||||||||||||||||||||||Add Redux Toolkit for your nextjs Project||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 npm install @reduxjs/toolkit react-redux
 
 
 
-4. >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Folder Structure<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+4. ||||||||||||||||||||||||||||||||||||||||||||||||||Folder Structure|||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-1.>>>>>>>>>>>>Page Folders<<<<<<<<<<<<<<
+1.---------------------Page Folders---------------------
 
 src > app > productDetails (create what ever you want) > page.js
 
-2.>>>>>>>>>>>>>>>>>>>>Redux<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+2.---------------------Redux---------------------------
 
 1. src > app > layout-client.js
-
-
 
 /*
 "use client";
@@ -76,9 +74,9 @@ export default store;
 */
 
 
-3. Import layout-client.js to layout.js
+3. Import layout-client.js TO>> layout.js
 
->>>>>>>>>>>>>>>>>>inside layout.js<<<<<<<<<<<<<<<<<<<
+-------------------------------inside layout.js----------------------------------
 
 /*
 import { Inter } from "next/font/google";
@@ -107,8 +105,103 @@ export default function RootLayout({ children }) {
 4. src > app > store > productSlice.js
 
 
+/*
 
 
+import axios from "axios";
 
+const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
+export const fetchProducts = createAsyncThunk(
+  "products/fetchProducts",
+  async () => {
+    const response = await axios.get("https://dummyjson.com/products");
+    return response.data.products;
+  }
+);
 
+export const fetchProductById = createAsyncThunk(
+  "products/fetchProductById",
+  async (id) => {
+    const response = await axios.get(`https://dummyjson.com/products/${id}`);
+    return response.data;
+  }
+);
+
+const ProductsSlice = createSlice({
+  name: "products",
+  initialState: {
+    products: [],
+    product: null,
+    userProducts: [],
+    status: "idle",
+    error: null,
+    addStatus: "idle",
+    addError: null,
+
+    singleProduct: null,
+    singleProductStatus: "idle",
+    singleProductError: null,
+  },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.status = "sucess";
+        state.products = action.payload;
+      })
+      .addCase(fetchProducts.rejected, (state) => {
+        state.status = "error";
+      })
+      .addCase(fetchProductById.pending, (state) => {
+        state.singleProductStatus = "loading";
+      })
+      .addCase(fetchProductById.fulfilled, (state, action) => {
+        state.singleProductStatus = "sucess";
+        state.singleProduct = action.payload;
+      })
+      .addCase(fetchProductById.rejected, (state) => {
+        state.singleProductStatus = "error";
+      });
+  },
+});
+
+export default ProductsSlice.reducer;
+
+*/
+
+5. ----------------------import slice to store index.js-- src > app > store > index.js-------------------------------
+
+/*
+import { configureStore } from "@reduxjs/toolkit";
+
+import MovieSlice from "./movieSlice";
+const store = configureStore({
+  reducer: {
+    movies: MovieSlice,
+  },
+});
+
+export default store;
+*/
+
+6..||||||||||||||||||||||||||||--If there are not work default tailwind.config.js use this --||||||||||||||||||||||||||||||||||||
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+ 
+    // Or if using `src` directory:
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
