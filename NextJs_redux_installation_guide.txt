@@ -25,8 +25,7 @@ npm install @reduxjs/toolkit react-redux
 
 1.>>>>>>>>>>>>Page Folders<<<<<<<<<<<<<<
 
-src > app 
-productDetails (create what ever you want) > page.js
+src > app > productDetails (create what ever you want) > page.js
 
 2.>>>>>>>>>>>>>>>>>>>>Redux<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
