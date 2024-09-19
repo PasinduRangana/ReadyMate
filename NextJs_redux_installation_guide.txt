@@ -18,7 +18,7 @@ C:\Users\user\Desktop\Delete>npx create-next-app@latest
 3.||||||||||||||||||||||||||||||||||||||||||||||||||Add Redux Toolkit for your nextjs Project||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 npm install @reduxjs/toolkit react-redux
-
+npm i axios
 
 
 4. ||||||||||||||||||||||||||||||||||||||||||||||||||Folder Structure|||||||||||||||||||||||||||||||||||||||||||||||||||||||
